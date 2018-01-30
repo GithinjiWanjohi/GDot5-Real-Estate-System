@@ -13,7 +13,7 @@
     <link rel="mask-icon" href="logos/GDot5logo45px.svg" color="#5bbad5">
     <link href="logos/GDot5logo45px.svg" rel="apple-touch-icon">
     <link rel="icon" type="image/ico" href="logos/GDot5logo16px2.png" sizes="16*16" />
-    <title> GDot5 | Tenant</title>
+    <title> GDot5 | Welcome</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/flexslider.css">

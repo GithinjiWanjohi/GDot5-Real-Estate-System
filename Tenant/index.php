@@ -57,8 +57,8 @@
                         </div>
                         <div class="navbar-collapse collapse sidebar-navbar-collapse">
                             <ul class="nav navbar-nav">
-                                <li><a href="#">Notifications <span class="badge">1,118</span></a></li>
                                 <li class="active"><a href="#">Account Information</a></li>
+                                <li><a href="#">Notifications <span class="badge">1,118</span></a></li>
                                 <li><a href="#">Payment Details</a></li>
                                 <li><a href="#">Banks and Cards</a></li>
                                 <li><a href="#">Account Reports</a></li>
@@ -99,7 +99,7 @@
                                         </li>
                                         <li>
                                             <div class="col-md-6">
-                                                <div class="avatar"> <img src="" alt="" class="img-responsive"> </div>
+                                                <div class="avatar"> <img src="../WebsiteImages/helloquence-51716.jpg" alt="" class="img-responsive"> </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <blockquote>
