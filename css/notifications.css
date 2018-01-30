@@ -1,0 +1,104 @@
+body{
+    background-color: whitesmoke;
+}
+.secnot{
+
+    background-color: white;
+}
+.notcontantainer{
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.notificationbar{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+span{
+    top: 4px;
+    color: red;
+
+}
+.notificationbar li{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    padding-bottom: 30px;
+}
+.notificationbar li i{
+    background-color: white;
+    width: 30px;
+    height: 30px;
+    display: block;
+    text-align: center;
+    line-height: 30px;
+
+}
+
+.notificationbar li div{
+    margin-left: 50px;
+    margin-top: -25px;
+    padding :12px 8px;
+    background-color: white;
+}
+.notificationbar li p{
+    margin-left: 50px;
+    margin-top: -25px;
+    padding :12px 8px;
+    background-color: white;
+}
+.viewbutton{
+    float: right;
+    background-color: #7ecff4;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 0;
+    border-radius: 2px;
+    margin-top: -15px;
+}
+.viewbutton:hover{
+    background-color: #3d3d3d;
+    color: #fff;
+}
+h2{
+    text-align: center;
+    color: #2d3033;
+}
+form p{
+    font-size: 20px;
+}
+.search{
+    width: 5%;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('../images/searchicon2.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 10px 18px 10px 38px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+
+}
+
+.ssubmit{
+    padding: 10px 18px 10px ;
+    text-align: center;
+    background-color: midnightblue;
+    color: white;
+    text-transform: uppercase;
+    border: 1px solid midnightblue;
+    border-radius: 4px;
+
+}
+
