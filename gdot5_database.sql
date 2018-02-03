@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 24, 2018 at 04:18 PM
+-- Generation Time: Feb 03, 2018 at 10:47 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -97,13 +97,38 @@ CREATE TABLE `payment` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payment_method`
+--
+
+CREATE TABLE `payment_method` (
+  `method_id` int(11) NOT NULL,
+  `method_name` text NOT NULL,
+  `pay_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `receipt`
+--
+
+CREATE TABLE `receipt` (
+  `receipt_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `tenant_id` int(11) NOT NULL,
+  `pay_amount` int(11) NOT NULL,
+  `pay_method` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rent`
 --
 
 CREATE TABLE `rent` (
   `rent_id` int(11) NOT NULL,
   `lease_id` int(11) NOT NULL,
-  `pay_id` int(11) NOT NULL,
   `rent_fee` int(11) NOT NULL,
   `late_fee` int(11) NOT NULL,
   `due_date` date NOT NULL
@@ -146,12 +171,22 @@ CREATE TABLE `tenant` (
 
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
-  `tenant_id` int(11) NOT NULL,
-  `agent_id` int(11) NOT NULL,
-  `landlord_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `name` text NOT NULL,
   `user_type` text NOT NULL,
   `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usertype`
+--
+
+CREATE TABLE `usertype` (
+  `user_type_id` int(11) NOT NULL,
+  `user_type_name` text NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -163,7 +198,8 @@ CREATE TABLE `user` (
 --
 ALTER TABLE `agent`
   ADD PRIMARY KEY (`agent_id`),
-  ADD KEY `pay_id` (`pay_id`);
+  ADD KEY `pay_id` (`pay_id`),
+  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `building`
@@ -177,7 +213,8 @@ ALTER TABLE `building`
 --
 ALTER TABLE `landlord`
   ADD PRIMARY KEY (`landlord_id`),
-  ADD KEY `tenant_id` (`tenant_id`);
+  ADD KEY `tenant_id` (`tenant_id`),
+  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `lease`
@@ -194,12 +231,24 @@ ALTER TABLE `payment`
   ADD KEY `rent_id` (`rent_id`);
 
 --
+-- Indexes for table `payment_method`
+--
+ALTER TABLE `payment_method`
+  ADD PRIMARY KEY (`method_id`),
+  ADD KEY `pay_id` (`pay_id`);
+
+--
+-- Indexes for table `receipt`
+--
+ALTER TABLE `receipt`
+  ADD PRIMARY KEY (`receipt_id`);
+
+--
 -- Indexes for table `rent`
 --
 ALTER TABLE `rent`
   ADD PRIMARY KEY (`rent_id`),
-  ADD KEY `lease_id` (`lease_id`),
-  ADD KEY `pay_id` (`pay_id`);
+  ADD KEY `lease_id` (`lease_id`);
 
 --
 -- Indexes for table `room`
@@ -213,16 +262,22 @@ ALTER TABLE `room`
 --
 ALTER TABLE `tenant`
   ADD PRIMARY KEY (`tenant_id`),
-  ADD KEY `room_id` (`room_id`);
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
-  ADD KEY `agent_id` (`agent_id`),
-  ADD KEY `landlord_id` (`landlord_id`),
-  ADD KEY `tenant_id` (`tenant_id`);
+  ADD KEY `email` (`email`);
+
+--
+-- Indexes for table `usertype`
+--
+ALTER TABLE `usertype`
+  ADD PRIMARY KEY (`user_type_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -259,6 +314,12 @@ ALTER TABLE `payment`
   MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `payment_method`
+--
+ALTER TABLE `payment_method`
+  MODIFY `method_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `rent`
 --
 ALTER TABLE `rent`
@@ -281,6 +342,12 @@ ALTER TABLE `tenant`
 --
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `usertype`
+--
+ALTER TABLE `usertype`
+  MODIFY `user_type_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -317,11 +384,16 @@ ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`rent_id`) REFERENCES `rent` (`rent_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `payment_method`
+--
+ALTER TABLE `payment_method`
+  ADD CONSTRAINT `payment_method_ibfk_1` FOREIGN KEY (`pay_id`) REFERENCES `payment` (`pay_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `rent`
 --
 ALTER TABLE `rent`
-  ADD CONSTRAINT `rent_ibfk_1` FOREIGN KEY (`lease_id`) REFERENCES `lease` (`lease_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `rent_ibfk_2` FOREIGN KEY (`pay_id`) REFERENCES `payment` (`pay_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `rent_ibfk_1` FOREIGN KEY (`lease_id`) REFERENCES `lease` (`lease_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `room`
@@ -339,9 +411,15 @@ ALTER TABLE `tenant`
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`agent_id`) REFERENCES `agent` (`agent_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`landlord_id`) REFERENCES `landlord` (`landlord_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_ibfk_3` FOREIGN KEY (`tenant_id`) REFERENCES `tenant` (`tenant_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`email`) REFERENCES `agent` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`email`) REFERENCES `landlord` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_ibfk_3` FOREIGN KEY (`email`) REFERENCES `tenant` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `usertype`
+--
+ALTER TABLE `usertype`
+  ADD CONSTRAINT `usertype_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
