@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 04, 2018 at 07:14 PM
+-- Generation Time: Feb 04, 2018 at 08:15 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -30,6 +30,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `agent` (
   `agent_id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `contact` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -56,6 +58,8 @@ CREATE TABLE `building` (
 
 CREATE TABLE `landlord` (
   `landlord_id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `contact` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -152,7 +156,8 @@ CREATE TABLE `tenant` (
   `tenant_id` int(11) NOT NULL,
   `room_id` int(11) NOT NULL,
   `landlord_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `contact` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -164,11 +169,10 @@ CREATE TABLE `tenant` (
 --
 
 CREATE TABLE `user` (
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `user_type_id` int(11) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `user_state` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
